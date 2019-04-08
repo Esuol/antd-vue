@@ -7,7 +7,7 @@
         @click="$emit('trigger', !collapsed)" />
 
       <div class="right">
-        <a-dropdown>
+        <a-dropdown class="userComponent">
           <div class="pointer">
             <a-avatar icon="user" />
             <span class="username">
@@ -91,6 +91,10 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.userComponent {
+  float: right;
 }
 
 .PageHeader .pointer {
