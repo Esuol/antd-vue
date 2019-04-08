@@ -4,7 +4,7 @@ export default {
   path: '/Dashboard',
   name: 'dashboard',
   meta: {
-    name: '看板',
+    name: 'test.index',
     icon: 'dashboard'
   },
   component: BasicLayout,
@@ -12,7 +12,7 @@ export default {
     path: 'index',
     name: 'dashboard_index',
     meta: {
-      name: 'index',
+      name: 'test.dashboard_index',
       routeName: 'dashboard_index'
     },
     component: () => import('./index')
@@ -21,7 +21,7 @@ export default {
     name: 'dashboard_table',
     hidden: true,
     meta: {
-      name: 'table',
+      name: 'test.dashboard_table',
       routeName: 'dashboard_table'
     },
     component: () => import('./table')
@@ -29,7 +29,7 @@ export default {
     path: 'form',
     name: 'dashboard_form',
     meta: {
-      name: 'table',
+      name: 'test.dashboard_form',
       routeName: 'dashboard_form'
     },
     component: () => import('./form')
