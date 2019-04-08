@@ -21,22 +21,59 @@
           </a-menu>
         </a-dropdown>
       </div>
+      <span
+        class="right , changeStyle"
+        @click="showModal">更换主题</span>
     </a-layout-header>
     <breadcrumb />
+
+    <div>
+      <a-modal
+        v-model="visible"
+        :width="500"
+        title="主题修改"
+        ok-text="确认"
+        cancel-text="取消"
+        :body-style="{margin: ' 0 auto'}"
+        @ok="hideModal">
+        <!-- <photo-shop @getColors="getColor" /> -->
+        <color-theme :data-form="dataForm" />
+      </a-modal>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import Breadcrumb from './Breadcrumb'
+import colorTheme from '@/components/colorTheme'
 
 export default {
   name: 'PageHeader',
-  components: { Breadcrumb },
+  components: {
+    Breadcrumb,
+    colorTheme
+  },
   props: {
     collapsed: {
       default: false,
       type: Boolean
+    }
+  },
+  data () {
+    return {
+      visible: false,
+      colors: {},
+      dataForm: [
+        { name: '@primary-color', color: '#1890ff' },
+        { name: '@link-color', color: '#1890ff' },
+        { name: '@secondary-color', color: '#0000ff' },
+        { name: '@text-color', color: '#1987a7' },
+        { name: '@text-color-secondary', color: '#eb2f96' },
+        { name: '@heading-color', color: '#fa8c16' },
+        { name: '@layout-header-background', color: '#000' },
+        { name: '@btn-primary-bg', color: '#397dcc' }
+      ]
     }
   },
   computed: {
@@ -44,9 +81,38 @@ export default {
       userInfo: state => state.user.info
     })
   },
+  created () {
+    this.style = this.arrayToObj(this.dataForm)
+    console.log(this.style)
+    window.less.modifyVars(this.style)
+  },
   methods: {
     logout () {
       this.$store.dispatch('user/logout')
+    },
+    showModal () {
+      this.visible = true
+    },
+    hideModal () {
+      this.visible = false
+    },
+    confirm () {
+      this.$confirm({
+        title: 'Confirm',
+        content: 'Bla bla ...',
+        okText: '确认',
+        cancelText: '取消'
+      })
+    },
+    getColor (res) {
+      this.colors = res
+    },
+    arrayToObj (arr) {
+      let obj = {}
+      for (let i = 0; i < arr.length; i++) {
+        obj[arr[i].name] = arr[i].color
+      }
+      return obj
     }
   }
 }
@@ -88,5 +154,9 @@ export default {
 
 .trigger:hover {
   color: #1890ff;
+}
+
+.changeStyle {
+  cursor: pointer;
 }
 </style>
