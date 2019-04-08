@@ -88,7 +88,6 @@ export default {
   methods: {
     updateDefaultKeys () {
       let routeName = this.$route.meta.routeName
-      routeName = routeName.indexOf('-') !== -1 ? routeName.split('-')[0] : routeName
       this.selectedKeys = [routeName]
     },
     select ({ key }) {
