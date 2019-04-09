@@ -43,13 +43,21 @@
         v-model="visible"
         :width="500"
         title="主题修改"
-        ok-text="确认"
-        cancel-text="重置主题"
-        :body-style="{margin: ' 0 auto'}"
-        @ok="hideModal"
-        @cancel="cancelHide">
+        :footer="null"
+        :body-style="{margin: ' 0 auto'}">
         <!-- <photo-shop @getColors="getColor" /> -->
         <color-theme :data-form="dataForm" />
+        <div style="width:170px;margin: 0 auto">
+          <a-button
+            style="margin-right:15px"
+            type="primary"
+            @click="resetTheme">
+            重置主题
+          </a-button>
+          <a-button @click="ok">
+            确定
+          </a-button>
+        </div>
       </a-modal>
     </div>
   </div>
@@ -80,10 +88,20 @@ export default {
         { name: '@primary-color', color: '#1890ff' },
         { name: '@link-color', color: '#1890ff' },
         { name: '@secondary-color', color: '#0000ff' },
-        { name: '@text-color', color: '#1987a7' },
-        { name: '@text-color-secondary', color: '#eb2f96' },
+        { name: '@text-color', color: '#333' },
+        { name: '@text-color-secondary', color: '#333' },
         { name: '@heading-color', color: '#fa8c16' },
-        { name: '@layout-header-background', color: '#000' },
+        { name: '@layout-header-background', color: '#333' },
+        { name: '@btn-primary-bg', color: '#397dcc' }
+      ],
+      initTheme: [
+        { name: '@primary-color', color: '#1890ff' },
+        { name: '@link-color', color: '#1890ff' },
+        { name: '@secondary-color', color: '#0000ff' },
+        { name: '@text-color', color: '#333' },
+        { name: '@text-color-secondary', color: '#333' },
+        { name: '@heading-color', color: '#fa8c16' },
+        { name: '@layout-header-background', color: '#333' },
         { name: '@btn-primary-bg', color: '#397dcc' }
       ],
       defalutValue: '中文'
@@ -114,13 +132,14 @@ export default {
     showModal () {
       this.visible = true
     },
-    hideModal () {
+    resetTheme () {
+      localStorage.setItem('app-theme', '{}')
+      this.style = this.arrayToObj(this.initTheme)
+      window.less.modifyVars(this.style)
       this.visible = false
     },
-    cancelHide () {
-      localStorage.setItem('app-theme', '{}')
+    ok () {
       this.visible = false
-      window.less.modifyVars(this.arrayToObj(this.dataForm))
     },
     getColor (res) {
       this.colors = res
