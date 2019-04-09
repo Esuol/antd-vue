@@ -65,7 +65,7 @@ export default {
         if (item.name === res.name) item.color = res.hex
       })
       this.style = this.arrayToObj(this.dataForm)
-      console.log(this.style)
+      localStorage.setItem('app-theme', JSON.stringify(this.style))
       window.less.modifyVars(this.style)
     },
     arrayToObj (arr) {

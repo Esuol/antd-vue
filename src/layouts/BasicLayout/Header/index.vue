@@ -33,9 +33,10 @@
         :width="500"
         title="主题修改"
         ok-text="确认"
-        cancel-text="取消"
+        cancel-text="重置主题"
         :body-style="{margin: ' 0 auto'}"
-        @ok="hideModal">
+        @ok="hideModal"
+        @cancel="cancelHide">
         <!-- <photo-shop @getColors="getColor" /> -->
         <color-theme :data-form="dataForm" />
       </a-modal>
@@ -83,8 +84,9 @@ export default {
   },
   created () {
     this.style = this.arrayToObj(this.dataForm)
-    console.log(this.style)
-    window.less.modifyVars(this.style)
+    let vars = {}
+    vars = Object.assign({}, this.style, JSON.parse(localStorage.getItem('app-theme')))
+    window.less.modifyVars(vars)
   },
   methods: {
     logout () {
@@ -96,13 +98,10 @@ export default {
     hideModal () {
       this.visible = false
     },
-    confirm () {
-      this.$confirm({
-        title: 'Confirm',
-        content: 'Bla bla ...',
-        okText: '确认',
-        cancelText: '取消'
-      })
+    cancelHide () {
+      localStorage.setItem('app-theme', '{}')
+      this.visible = false
+      window.less.modifyVars(this.arrayToObj(this.dataForm))
     },
     getColor (res) {
       this.colors = res
