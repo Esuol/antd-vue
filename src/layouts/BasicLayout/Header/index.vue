@@ -33,12 +33,13 @@
         </a-select>
       </div>
       <span
+        v-if="isShowTheme"
         class="right , changeStyle"
         @click="showModal">更换主题</span>
     </a-layout-header>
     <breadcrumb />
 
-    <div>
+    <div v-if="isShowTheme">
       <a-modal
         v-model="visible"
         :width="500"
@@ -47,12 +48,17 @@
         :body-style="{margin: ' 0 auto'}">
         <!-- <photo-shop @getColors="getColor" /> -->
         <color-theme :data-form="dataForm" />
-        <div style="width:170px;margin: 0 auto">
+        <div style="width:280px;margin: 0 auto">
           <a-button
             style="margin-right:15px"
             type="primary"
             @click="resetTheme">
             重置主题
+          </a-button>
+          <a-button
+            style="margin-right:15px"
+            @click="createJson">
+            生成JSON
           </a-button>
           <a-button @click="ok">
             确定
@@ -64,6 +70,7 @@
 </template>
 
 <script>
+import FileSaver from 'file-saver'
 import { mapState } from 'vuex'
 import Breadcrumb from './Breadcrumb'
 import colorTheme from '@/components/colorTheme'
@@ -104,7 +111,8 @@ export default {
         { name: '@layout-header-background', color: '#001529' },
         { name: '@btn-primary-bg', color: '#397dcc' }
       ],
-      defalutValue: '中文'
+      defalutValue: '中文',
+      isShowTheme: process.env.VUE_APP_MODE === 'development'
     }
   },
   computed: {
@@ -119,10 +127,12 @@ export default {
     }
   },
   created () {
-    this.style = this.arrayToObj(this.dataForm)
-    let vars = {}
-    vars = Object.assign({}, this.style, JSON.parse(localStorage.getItem('app-theme')))
-    window.less.modifyVars(vars)
+    if (this.isShowTheme) {
+      this.style = this.arrayToObj(this.dataForm)
+      let vars = {}
+      vars = Object.assign({}, this.style, JSON.parse(localStorage.getItem('app-theme')))
+      window.less.modifyVars(vars)
+    }
   },
   methods: {
     logout () {
@@ -134,8 +144,7 @@ export default {
     },
     resetTheme () {
       localStorage.setItem('app-theme', '{}')
-      this.style = this.arrayToObj(this.initTheme)
-      window.less.modifyVars(this.style)
+      window.less.modifyVars()
       this.visible = false
     },
     ok () {
@@ -150,6 +159,11 @@ export default {
         obj[arr[i].name] = arr[i].color
       }
       return obj
+    },
+    createJson () {
+      const data = JSON.stringify(this.arrayToObj(this.dataForm))
+      const blob = new Blob([data], { type: '' })
+      FileSaver.saveAs(blob, 'less.json')
     },
     handleChange (item) {
       const Transform = new CustomEvent('selectLanguage', { 'detail': item })
