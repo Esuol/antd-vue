@@ -91,7 +91,7 @@ export default {
         { name: '@text-color', color: '#333' },
         { name: '@text-color-secondary', color: '#333' },
         { name: '@heading-color', color: '#fa8c16' },
-        { name: '@layout-header-background', color: '#333' },
+        { name: '@layout-header-background', color: '#001529' },
         { name: '@btn-primary-bg', color: '#397dcc' }
       ],
       initTheme: [
@@ -101,7 +101,7 @@ export default {
         { name: '@text-color', color: '#333' },
         { name: '@text-color-secondary', color: '#333' },
         { name: '@heading-color', color: '#fa8c16' },
-        { name: '@layout-header-background', color: '#333' },
+        { name: '@layout-header-background', color: '#001529' },
         { name: '@btn-primary-bg', color: '#397dcc' }
       ],
       defalutValue: '中文'
