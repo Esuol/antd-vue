@@ -7,7 +7,7 @@
         @click="$emit('trigger', !collapsed)" />
 
       <div class="right">
-        <a-dropdown>
+        <a-dropdown class="userComponent">
           <div class="pointer">
             <a-avatar icon="user" />
             <span class="username">
@@ -20,6 +20,17 @@
             </a-menu-item>
           </a-menu>
         </a-dropdown>
+        <a-select
+          :default-value="defalutValue"
+          style="width: 80px;marginRight:20px"
+          @change="handleChange">
+          <a-select-option
+            v-for="(item,index) in languages"
+            :key="index"
+            :value="item.value">
+            {{ item.name }}
+          </a-select-option>
+        </a-select>
       </div>
       <span
         class="right , changeStyle"
@@ -74,13 +85,20 @@ export default {
         { name: '@heading-color', color: '#fa8c16' },
         { name: '@layout-header-background', color: '#000' },
         { name: '@btn-primary-bg', color: '#397dcc' }
-      ]
+      ],
+      defalutValue: '中文'
     }
   },
   computed: {
     ...mapState({
       userInfo: state => state.user.info
-    })
+    }),
+    languages () {
+      return [
+        { name: this.$t('common.chinese'), value: 'cn' },
+        { name: this.$t('common.english'), value: 'en' }
+      ]
+    }
   },
   created () {
     this.style = this.arrayToObj(this.dataForm)
@@ -92,6 +110,7 @@ export default {
     logout () {
       this.$store.dispatch('user/logout')
     },
+
     showModal () {
       this.visible = true
     },
@@ -112,6 +131,10 @@ export default {
         obj[arr[i].name] = arr[i].color
       }
       return obj
+    },
+    handleChange (item) {
+      const Transform = new CustomEvent('selectLanguage', { 'detail': item })
+      window.dispatchEvent(Transform)
     }
   }
 }
@@ -130,6 +153,10 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.userComponent {
+  float: right;
 }
 
 .PageHeader .pointer {

@@ -33,14 +33,14 @@
             v-if="item.onePage"
             :key="item.children[0].name">
             <a-icon :type="item.children[0].meta.icon" />
-            <span>{{ item.children[0].meta.name }}</span>
+            <span>{{ $t(item.children[0].meta.name) }}</span>
           </a-menu-item>
 
           <a-menu-item
             v-else-if="!item.children"
             :key="item.name">
             <a-icon :type="item.meta.icon" />
-            <span>{{ item.meta.name }}</span>
+            <span>{{ $t(item.meta.name) }}</span>
           </a-menu-item>
           <sub-menu
             v-else
