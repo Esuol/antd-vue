@@ -39,26 +39,11 @@ export default {
   },
   data () {
     return {
-      visible: false,
       colors: '',
       style: {}
     }
   },
   methods: {
-    showModal () {
-      this.visible = true
-    },
-    hideModal () {
-      this.visible = false
-    },
-    confirm () {
-      this.$confirm({
-        title: 'Confirm',
-        content: 'Bla bla ...',
-        okText: '确认',
-        cancelText: '取消'
-      })
-    },
     getColor (res) {
       this.colors = res.hex
       this.dataForm.map(item => {
