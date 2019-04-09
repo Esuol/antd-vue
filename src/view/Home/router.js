@@ -4,7 +4,7 @@ export default {
   path: '/Home',
   name: 'home',
   meta: {
-    name: 'Home',
+    name: 'test.Home',
     icon: 'dashboard'
   },
   component: BasicLayout,
@@ -12,7 +12,7 @@ export default {
     path: 'index',
     name: 'home_index',
     meta: {
-      name: 'home_index',
+      name: 'test.home_index',
       routeName: 'home_index'
     },
     component: () => import('./index')
