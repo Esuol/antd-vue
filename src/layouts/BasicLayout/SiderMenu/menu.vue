@@ -122,4 +122,11 @@ export default {
 .SiderMenu .logo span {
   font-size: 20px;
 }
+
+.testOverflow {
+  width: 10em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 </style>
