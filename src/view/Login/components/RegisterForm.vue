@@ -293,8 +293,6 @@ export default {
 
     handleSubmit () {
       this.form.validateFields((err, values) => {
-        console.log('----')
-        console.log(this.form.getFieldsValue())
         if (!err) {
           this.$emit('register', values)
         }
