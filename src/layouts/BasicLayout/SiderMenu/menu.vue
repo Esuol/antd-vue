@@ -130,7 +130,6 @@ export default {
 }
 
 .SiderMenu .logo span {
-  font-size: 14px;
-  margin-top: 10px
+  font-size: 20px;
 }
 </style>

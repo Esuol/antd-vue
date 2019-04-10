@@ -49,7 +49,7 @@
         :body-style="{margin: ' 0 auto'}">
         <!-- <photo-shop @getColors="getColor" /> -->
         <color-theme :data-form="dataForm" />
-        <div style="width:280px;margin: 0 auto">
+        <div style="width:320px;margin: 0 auto">
           <a-button
             style="margin-right:15px"
             type="primary"
@@ -58,8 +58,8 @@
           </a-button>
           <a-button
             style="margin-right:15px"
-            @click="createJson">
-            生成JSON
+            @click="exportLess">
+            修改配置文件
           </a-button>
           <a-button @click="ok">
             确定
@@ -71,7 +71,6 @@
 </template>
 
 <script>
-import FileSaver from 'file-saver'
 import { mapState } from 'vuex'
 import Breadcrumb from './Breadcrumb'
 import colorTheme from '@/components/colorTheme'
@@ -161,14 +160,12 @@ export default {
       }
       return obj
     },
-    createJson () {
-      const data = JSON.stringify(this.arrayToObj(this.dataForm))
-      const blob = new Blob([data], { type: '' })
-      FileSaver.saveAs(blob, 'less.json')
+    async exportLess () {
+      await this.$api.exportLess.set(this.dataForm)
+      this.$message.success('success')
     },
     showSmall () {
       this.$store.commit('menu/updateSmall', true)
-      console.log(this.$store.state.menu.showSmallMenu)
     },
     handleChange (item) {
       const Transform = new CustomEvent('selectLanguage', { 'detail': item })
