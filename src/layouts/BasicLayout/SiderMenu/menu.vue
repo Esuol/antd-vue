@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="SiderMenu">
     <div
       class="logo"
       :style="{background: theme === 'dark' ? '#002140' : '#fff'}">
@@ -99,7 +99,7 @@ export default {
 </script>
 
 <style scoped>
-.SiderMenu .logo ,.SiderMenus .logo{
+.SiderMenu .logo, .SiderMenus .logo{
   display: flex;
   justify-content: center;
   height: 64px;
