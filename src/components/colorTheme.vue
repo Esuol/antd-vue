@@ -10,8 +10,7 @@
           <span
             :style="{'background': item.color, width: '12px',
                      height: '12px',
-                     display: 'block'}"
-            @click="showModal" />
+                     display: 'block'}" />
         </div>
         <a-menu slot="overlay">
           <photo-shop
