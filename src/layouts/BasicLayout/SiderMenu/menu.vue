@@ -1,5 +1,5 @@
 <template>
-  <div class="SiderMenu">
+  <div>
     <div
       class="logo"
       :style="{background: theme === 'dark' ? '#002140' : '#fff'}">
