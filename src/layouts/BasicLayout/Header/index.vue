@@ -2,6 +2,7 @@
   <div class="PageHeader">
     <a-layout-header class="Header">
       <a-icon
+        v-if="$store.state.menu.showBigMenu"
         class="trigger"
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click="$emit('trigger', !collapsed)" />
@@ -165,6 +166,10 @@ export default {
       const blob = new Blob([data], { type: '' })
       FileSaver.saveAs(blob, 'less.json')
     },
+    showSmall () {
+      this.$store.commit('menu/updateSmall', true)
+      console.log(this.$store.state.menu.showSmallMenu)
+    },
     handleChange (item) {
       const Transform = new CustomEvent('selectLanguage', { 'detail': item })
       window.dispatchEvent(Transform)
@@ -218,4 +223,5 @@ export default {
 .changeStyle {
   cursor: pointer;
 }
+
 </style>

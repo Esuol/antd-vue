@@ -7,6 +7,7 @@ import 'ant-design-vue/dist/antd.less'
 
 import i18n from './assets/lang/i18n'
 import './permission'
+import './assets/styles/index.less'
 
 Vue.config.productionTip = true
 
