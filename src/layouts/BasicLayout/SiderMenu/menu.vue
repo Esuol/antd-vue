@@ -99,17 +99,7 @@ export default {
 </script>
 
 <style scoped>
-.SiderMenu .logo {
-  display: flex;
-  justify-content: center;
-  height: 64px;
-  padding: 16px;
-  color: #ffffff;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.SiderMenus .logo {
+.SiderMenu .logo ,.SiderMenus .logo{
   display: flex;
   justify-content: center;
   height: 64px;
