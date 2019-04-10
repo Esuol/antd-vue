@@ -164,13 +164,6 @@ export default {
   text-indent: 10px;
 }
 
-.testOverflow {
-  width: 10em;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 .icons{
   position: fixed;
   top: 14px;
