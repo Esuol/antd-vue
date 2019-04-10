@@ -6,51 +6,14 @@
       class="SiderMenu"
       :trigger="null"
       collapsible>
-      <div class="logo">
-        <img
-          src="../images/logo.png"
-          alt="logo">
-        <a-tooltip placement="rightTop">
-          <template slot="title">
-            <span>{{ VUE_APP_NAME }} {{ VUE_APP_ENV }}</span>
-          </template>
-          <span
-            v-if="!collapsed"
-            class="testOverflow">
-            {{ VUE_APP_NAME }} {{ VUE_APP_ENV }}
-          </span>
-        </a-tooltip>
-      </div>
-
-      <a-menu
+      <side-menu
+        theme="dark"
+        :collapsed="collapsed"
         :selected-keys="selectedKeys"
         :open-keys="openKeys"
-        theme="dark"
-        mode="inline"
+        :menu-list="menuList"
         @openChange="openChange"
-        @select="select">
-        <template v-for="item in menuList">
-          <template v-if="!item.hidden">
-            <a-menu-item
-              v-if="item.onePage"
-              :key="item.children[0].name">
-              <a-icon :type="item.children[0].meta.icon" />
-              <span>{{ $t(item.children[0].meta.name) }}</span>
-            </a-menu-item>
-
-            <a-menu-item
-              v-else-if="!item.children"
-              :key="item.name">
-              <a-icon :type="item.meta.icon" />
-              <span>{{ $t(item.meta.name) }}</span>
-            </a-menu-item>
-            <sub-menu
-              v-else
-              :key="item.name"
-              :menu-info="item" />
-          </template>
-        </template>
-      </a-menu>
+        @select="select" />
     </a-layout-sider>
 
     <div>
@@ -61,53 +24,16 @@
         :visible="$store.state.menu.showsmallMenu"
         @close="onClose">
         <div class="SiderMenus">
-          <div class="logo">
-            <img
-              src="../images/logo.png"
-              alt="logo">
-            <a-tooltip placement="rightTop">
-              <template slot="title">
-                <span style="color: #ccc">{{ VUE_APP_NAME }} {{ VUE_APP_ENV }}</span>
-              </template>
-              <span
-                v-if="!collapsed"
-                style="color: #333;margin-top:5px"
-                class="testOverflow">
-                {{ VUE_APP_NAME }}
-              </span>
-            </a-tooltip>
-          </div>
+          <side-menu
+            theme="light"
+            :collapsed="collapsed"
+            :selected-keys="selectedKeys"
+            :open-keys="openKeys"
+            :menu-list="menuList"
+            @openChange="openChange"
+            @select="select" />
         </div>
 
-        <a-menu
-          style="width:245px"
-          :selected-keys="selectedKeys"
-          :open-keys="openKeys"
-          mode="inline"
-          @openChange="openChange"
-          @select="select">
-          <template v-for="item in menuList">
-            <template v-if="!item.hidden">
-              <a-menu-item
-                v-if="item.onePage"
-                :key="item.children[0].name">
-                <a-icon :type="item.children[0].meta.icon" />
-                <span>{{ $t(item.children[0].meta.name) }}</span>
-              </a-menu-item>
-
-              <a-menu-item
-                v-else-if="!item.children"
-                :key="item.name">
-                <a-icon :type="item.meta.icon" />
-                <span>{{ $t(item.meta.name) }}</span>
-              </a-menu-item>
-              <sub-menu
-                v-else
-                :key="item.name"
-                :menu-info="item" />
-            </template>
-          </template>
-        </a-menu>
         <a-icon
           v-if="$store.state.menu.showsmallMenu"
           class="icons-copy"
@@ -127,11 +53,12 @@
 </template>
 
 <script>
-import SubMenu from './SubMenu'
+import SideMenu from './menu'
+import { setTimeout } from 'timers'
 
 export default {
   name: 'SiderMenu',
-  components: { SubMenu },
+  components: { SideMenu },
   props: {
     collapsed: {
       default: false,
@@ -160,7 +87,7 @@ export default {
       this.modifyMenu()
     }
   },
-  created () {
+  mounted () {
     this.initProject()
   },
   methods: {
@@ -168,13 +95,23 @@ export default {
       let routeName = this.$route.meta.routeName
       this.selectedKeys = [routeName]
     },
-    select ({ key }) {
+    select (key) {
       this.$router.push({ name: key })
     },
     openChange (menuItem) {
       this.openKeys = menuItem
     },
     initProject () {
+      if (document.body.clientWidth === 0) {
+        setTimeout(() => {
+          this.currentClientWidth = document.body.clientWidth
+          this.watchWidth()
+        }, 100)
+      } else {
+        this.watchWidth()
+      }
+    },
+    watchWidth () {
       this.menuList = this.$router.options.routes
       this.updateDefaultKeys()
       let timer = null
@@ -218,48 +155,13 @@ export default {
   height: 100vh;
 }
 
-.SiderMenu .logo {
-  display: flex;
-  justify-content: center;
-  background-color: #002140;
-  height: 64px;
-  padding: 16px;
-  color: #ffffff;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.SiderMenus .logo {
-  display: flex;
-  justify-content: center;
-  height: 64px;
-  padding: 16px;
-  color: #ffffff;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.SiderMenu .logo img {
-  height: 100%;
-}
-
 .SiderMenus .logo img {
   height: 100%;
-}
-
-.SiderMenu .logo span {
-  height: 100%;
-  text-indent: 10px;
 }
 
 .SiderMenus .logo span {
   height: 100%;
   text-indent: 10px;
-}
-
-.SiderMenu .logo span {
-  font-size: 20px;
 }
 
 .testOverflow {

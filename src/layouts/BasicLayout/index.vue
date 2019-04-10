@@ -45,12 +45,12 @@ export default {
   methods: {
     moveRight () {
       move(this.$refs['mainpager'].$el)
-        .set('margin-left', '256px')
+        .to(256, 0)
         .end()
     },
     moveLeft () {
       move(this.$refs['mainpager'].$el)
-        .set('margin-left', '0')
+        .to(0, 0)
         .end()
     }
   }
