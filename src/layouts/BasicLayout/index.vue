@@ -8,7 +8,7 @@
       ref="mainpager"
       class="mainpager">
       <a-icon
-        v-if="($store.state.menu.showBigMenu || !$isHasIframe)"
+        v-if="($store.state.menu.showBigMenu || $isHasIframe)"
         :class="[$isHasIframe ? 'hasIframe' : 'noIframe']"
         class="trigger"
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
@@ -16,7 +16,9 @@
       <page-header
         v-if="$isHasIframe"
         :collapsed="collapsed" />
-      <breadcrumb :style="{paddingLeft: $isHasIframe ? '20px' : '60px'}" />
+      <breadcrumb
+        :style="{paddingLeft: $isHasIframe ? '20px' : '60px',
+                 height: $isHasIframe ? '45px' : '50px'}" />
       <a-layout-content class="outer-container">
         <div class="inner-container">
           <router-view style="min-height: calc(100vh - 200px)" />
