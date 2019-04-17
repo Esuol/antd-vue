@@ -133,12 +133,13 @@ export default {
     showModal () {
       this.visible = true
     },
-    resetTheme () {
+    async resetTheme () {
       localStorage.setItem('app-theme', '{}')
       let vars = {}
       vars = this.arrayToObj(this.initTheme)
       window.less.modifyVars(vars)
       this.visible = false
+      await this.$api.exportLess.set(this.initTheme)
       this.$message.success('重置主题成功')
     },
     ok () {
