@@ -16,7 +16,10 @@
       <page-header
         v-if="$isHasIframe"
         :collapsed="collapsed" />
-      <breadcrumb :style="{paddingLeft: $isHasIframe ? '20px' : '60px'}" />
+      <breadcrumb
+        :style="{paddingLeft: $isHasIframe ? '20px' : '60px',
+                 height: $isHasIframe ? '45px' : '65px',
+                 paddingTop: $isHasIframe ? '0px' : '10px'}" />
       <a-layout-content class="outer-container">
         <div class="inner-container">
           <router-view style="min-height: calc(100vh - 200px)" />
@@ -101,7 +104,7 @@ export default {
   transition: color 0.3s;
 }
 .noIframe {
- top:-6px;
+ top:4px;
 }
 .hasIframe {
   top: 0
