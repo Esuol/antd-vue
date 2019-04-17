@@ -51,6 +51,7 @@ export default {
       this.style = this.arrayToObj(this.dataForm)
       localStorage.setItem('app-theme', JSON.stringify(this.style))
       window.less.modifyVars(this.style)
+      this.$store.commit('theme/updateIsReset', false)
       await this.$api.exportLess.set(this.dataForm)
       this.$message.success('修改主题成功')
     },

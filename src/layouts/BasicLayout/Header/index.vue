@@ -41,7 +41,7 @@
         :footer="null"
         :body-style="{margin: ' 0 auto'}">
         <!-- <photo-shop @getColors="getColor" /> -->
-        <color-theme :data-form="dataForm" />
+        <color-theme :data-form="$store.state.theme.isReset ? initTheme : dataForm" />
         <div style="width:320px;margin: 0 auto">
           <a-button
             style="margin-right:15px"
@@ -92,16 +92,6 @@ export default {
         { name: '@layout-header-background', color: '#001529' },
         { name: '@btn-primary-bg', color: '#397dcc' }
       ],
-      initTheme: [
-        { name: '@primary-color', color: '#1890ff' },
-        { name: '@link-color', color: '#1890ff' },
-        { name: '@secondary-color', color: '#0000ff' },
-        { name: '@text-color', color: '#333' },
-        { name: '@text-color-secondary', color: '#333' },
-        { name: '@heading-color', color: '#fa8c16' },
-        { name: '@layout-header-background', color: '#001529' },
-        { name: '@btn-primary-bg', color: '#397dcc' }
-      ],
       defalutValue: '中文',
       isShowTheme: process.env.VUE_APP_MODE === 'development'
     }
@@ -134,12 +124,24 @@ export default {
       this.visible = true
     },
     async resetTheme () {
+      let initTheme = [
+        { name: '@primary-color', color: '#1890ff' },
+        { name: '@link-color', color: '#1890ff' },
+        { name: '@secondary-color', color: '#0000ff' },
+        { name: '@text-color', color: '#333' },
+        { name: '@text-color-secondary', color: '#333' },
+        { name: '@heading-color', color: '#fa8c16' },
+        { name: '@layout-header-background', color: '#001529' },
+        { name: '@btn-primary-bg', color: '#397dcc' }
+      ]
+      this.initTheme = initTheme
+      this.$store.commit('theme/updateIsReset', true)
       localStorage.setItem('app-theme', '{}')
       let vars = {}
-      vars = this.arrayToObj(this.initTheme)
+      vars = this.arrayToObj(initTheme)
       window.less.modifyVars(vars)
       this.visible = false
-      await this.$api.exportLess.set(this.initTheme)
+      await this.$api.exportLess.set(initTheme)
       this.$message.success('重置主题成功')
     },
     ok () {
