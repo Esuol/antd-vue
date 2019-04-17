@@ -54,7 +54,6 @@
 
 <script>
 import SideMenu from './menu'
-import { setTimeout } from 'timers'
 
 export default {
   name: 'SiderMenu',
