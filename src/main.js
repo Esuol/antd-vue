@@ -21,6 +21,8 @@ window.addEventListener('selectLanguage', function (e) {
   i18n.locale = e.detail
 }, false)
 
+Vue.prototype.$isHasIframe = window.self === window.top
+
 new Vue({
   router,
   store,

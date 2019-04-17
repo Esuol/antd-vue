@@ -1,12 +1,6 @@
 <template>
   <div class="PageHeader">
     <a-layout-header class="Header">
-      <a-icon
-        v-if="$store.state.menu.showBigMenu"
-        class="trigger"
-        :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-        @click="$emit('trigger', !collapsed)" />
-
       <div class="right">
         <a-dropdown class="userComponent">
           <div class="pointer">
@@ -38,7 +32,6 @@
         class="right , changeStyle"
         @click="showModal">更换主题</span>
     </a-layout-header>
-    <breadcrumb />
 
     <div v-if="isShowTheme">
       <a-modal
@@ -72,13 +65,11 @@
 
 <script>
 import { mapState } from 'vuex'
-import Breadcrumb from './Breadcrumb'
 import colorTheme from '@/components/colorTheme'
 
 export default {
   name: 'PageHeader',
   components: {
-    Breadcrumb,
     colorTheme
   },
   props: {
@@ -203,14 +194,6 @@ export default {
   background: #fff;
   padding: 0;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-}
-
-.trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
 }
 
 .trigger:hover {
