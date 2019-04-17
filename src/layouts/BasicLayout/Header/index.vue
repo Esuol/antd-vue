@@ -135,8 +135,11 @@ export default {
     },
     resetTheme () {
       localStorage.setItem('app-theme', '{}')
-      window.less.modifyVars()
+      let vars = {}
+      vars = this.arrayToObj(this.initTheme)
+      window.less.modifyVars(vars)
       this.visible = false
+      this.$message.success('重置主题成功')
     },
     ok () {
       this.visible = false
