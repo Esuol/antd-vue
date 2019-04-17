@@ -1,6 +1,7 @@
 <template>
   <div class="SiderMenu">
     <div
+      v-if="$isHasIframe"
       class="logo"
       :style="{background: theme === 'dark' ? '#002140' : '#fff'}">
       <img
