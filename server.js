@@ -20,7 +20,10 @@ app.post('/exportLess', function (req, res) {
   let str = '@import "../../../node_modules/ant-design-vue/lib/style/themes/default.less"; \n'
 
   lessObj.map((item, index) => {
-    str += `${item.name}: ${item.color}; \n`
+    let res = ''
+    if (item.name === '@layout-sider-background') res = `${item.name}: ${item.color} !important; \n`
+    else res = `${item.name}: ${item.color}; \n`
+    str += res
   })
 
   fs.writeFile('./src/assets/styles/variables.less', str, () => {
