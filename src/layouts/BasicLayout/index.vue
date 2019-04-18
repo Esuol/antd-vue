@@ -8,7 +8,7 @@
       ref="mainpager"
       class="mainpager">
       <a-icon
-        v-if="($store.state.menu.showBigMenu || $isHasIframe)"
+        v-if="$store.state.menu.showBigMenu"
         :class="[$isHasIframe ? 'hasIframe' : 'noIframe']"
         class="trigger"
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
