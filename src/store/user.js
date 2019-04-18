@@ -53,6 +53,11 @@ export default {
       commit('update', {
         token: ''
       })
+
+      window.parent.postMessage({
+        data: 'logout'
+      }, '*')
+
       router.replace('/login')
     }
   }
