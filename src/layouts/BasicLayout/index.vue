@@ -9,16 +9,16 @@
       class="mainpager">
       <a-icon
         v-if="$store.state.menu.showBigMenu"
-        :class="[$isHasIframe ? 'hasIframe' : 'noIframe']"
+        :class="[$isNotInIframe ? 'hasIframe' : 'noIframe']"
         class="trigger"
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click="collapsed = !collapsed" />
       <page-header
-        v-if="$isHasIframe"
+        v-if="$isNotInIframe"
         :collapsed="collapsed" />
       <breadcrumb
-        :style="{paddingLeft: $isHasIframe ? '20px' : '60px',
-                 height: $isHasIframe ? '45px' : '50px'}" />
+        :style="{paddingLeft: $isNotInIframe ? '20px' : '60px',
+                 height: $isNotInIframe ? '45px' : '50px'}" />
       <a-layout-content class="outer-container">
         <div class="inner-container">
           <router-view style="min-height: calc(100vh - 200px)" />
