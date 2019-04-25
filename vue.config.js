@@ -1,5 +1,10 @@
 const path = require('path')
 const AntDesignThemePlugin = require('antd-theme-webpack-plugin')
+const isDev = process.env.NODE_ENV === 'development'
+const prodTheme = require('./theme')
+const devTheme = {
+  'border-radius-base': '2px'
+}
 
 process.env.VUE_APP_USER = process.env.USER
 process.env.VUE_APP_BUILD_DATETIME = new Date()
@@ -28,17 +33,15 @@ const config = {
   css: {
     loaderOptions: {
       less: {
-        modifyVars: {
-          'border-radius-base': '2px'
-        },
+        modifyVars: isDev ? devTheme : prodTheme,
         javascriptEnabled: true
       }
     }
   },
   configureWebpack: {
     plugins: [
-      new AntDesignThemePlugin(options)
-    ]
+      isDev && new AntDesignThemePlugin(options)
+    ].filter(Boolean)
   }
 }
 

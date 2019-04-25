@@ -17,21 +17,24 @@ app.use(bodyParser.json())
 
 app.post('/exportLess', function (req, res) {
   let lessObj = req.body
-  let str = '@import "../../../node_modules/ant-design-vue/lib/style/themes/default.less"; \n'
 
-  lessObj.map((item, index) => {
-    let res = ''
-    if (item.name === '@layout-sider-background') res = `${item.name}: ${item.color} !important; \n`
-    else res = `${item.name}: ${item.color}; \n`
-    str += res
+  let themeStr = 'const modifyVars = { \n'
+
+  lessObj.map(item => {
+    themeStr += `'${item.name.slice(1)}': '${item.color}', \n`
   })
 
-  fs.writeFile('./src/assets/styles/variables.less', str, () => {
+  themeStr += `} \n`
+
+  themeStr = themeStr + 'module.exports = modifyVars'
+
+  fs.writeFile('./theme.js', themeStr, () => {
     console.log('写入成功')
   })
+
   res.send({ status: 1 })
 })
 
-app.listen(3030, function () {
+app.listen(3020, function () {
   console.log('export less app listening on port 3030!')
 })
